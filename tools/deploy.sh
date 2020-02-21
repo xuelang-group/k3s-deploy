@@ -110,7 +110,7 @@ install() {
     export INSTALL_K3S_VERSION=$K3S_VERSION
     export INSTALL_K3S_SKIP_DOWNLOAD=true
     export INSTALL_K3S_EXEC="--docker --bind-address=$K3S_BIND_ADDRESS --disable-network-policy"
-    curl -sfL "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/${OSS_K3S_VERSION}/deployments/k3s/install.sh" | sh -
+    curl -sfL "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/${OSS_K3S_VERSION}/deployments/install.sh" | sh -
 }
 
 check() {
