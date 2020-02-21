@@ -80,7 +80,7 @@ setup_tmp() {
 
 download_binary() {
     info "Downloading Binary..."
-    curl -o ${TMP_BIN} -L "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/${OSS_K3S_VERSION}/bin/k3s-${ARCH}"
+    curl -o ${TMP_BIN} -fL "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/${OSS_K3S_VERSION}/bin/k3s-${ARCH}"
 }
 
 setup_binary() {
@@ -103,7 +103,7 @@ setup_binary() {
 
 download_images() {
     info "Downloading Images..."
-    curl -o ${TMP_IMAGES} -L "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/${OSS_K3S_VERSION}/deployments/${ARCH}/images.tar" || info "No Preloaded Images Available."
+    curl -o ${TMP_IMAGES} -fL "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/${OSS_K3S_VERSION}/deployments/${ARCH}/images.tar" || info "No Preloaded Images Available."
 }
 
 setup_images() {
