@@ -109,6 +109,7 @@ prepare() {
     setup_env
     setup_tmp
     setup_verify_arch
+    setup_verify_version
 }
 
 download() {
