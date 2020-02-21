@@ -7,9 +7,9 @@ info() {
 }
 
 setup_env() {
-    SUDO=sudo
+    SUDO="sudo"
     if [ $(id -u) -eq 0 ]; then
-        SUDO=
+        SUDO=""
     fi
 }
 
@@ -37,27 +37,27 @@ setup_verify_arch() {
     fi
     case $ARCH in
         amd64)
-            ARCH=amd64
-            SUFFIX=
+            ARCH="amd64"
+            SUFFIX=""
             ;;
         x86_64)
-            ARCH=amd64
-            SUFFIX=
+            ARCH="amd64"
+            SUFFIX=""
             ;;
         arm64)
-            ARCH=arm64v8
+            ARCH="arm64v8"
             SUFFIX=-${ARCH}
             ;;
         aarch64)
-            ARCH=arm64v8
+            ARCH="arm64v8"
             SUFFIX=-${ARCH}
             ;;
         arm*)
-            ARCH=arm32v7
+            ARCH="arm32v7"
             SUFFIX=-${ARCH}hf
             ;;
         *)
-            fatal "Unsupported architecture $ARCH"
+            fatal "Unsupported architecture ${ARCH}"
     esac
 }
 
@@ -121,9 +121,9 @@ install() {
     setup_binary
     setup_images
 
-    export INSTALL_K3S_VERSION=$K3S_VERSION
+    export INSTALL_K3S_VERSION=${K3S_VERSION}
     export INSTALL_K3S_SKIP_DOWNLOAD=true
-    export INSTALL_K3S_EXEC="--docker --bind-address=$K3S_BIND_ADDRESS --disable-network-policy"
+    export INSTALL_K3S_EXEC="--docker --bind-address=${K3S_BIND_ADDRESS} --disable-network-policy"
     curl -sfL "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/${OSS_K3S_VERSION}/deployments/install.sh" | sh -
 }
 
