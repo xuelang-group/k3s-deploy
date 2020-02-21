@@ -66,6 +66,7 @@ setup_tmp() {
     TMP_DIR=$(mktemp -d -t k3s-install.XXXXXXXXXX)
     TMP_HASH=${TMP_DIR}/k3s.hash
     TMP_BIN=${TMP_DIR}/k3s.bin
+    TMP_IMAGES=${TMP_DIR}/images.tar
     cleanup() {
         code=$?
         set +e
@@ -74,6 +75,10 @@ setup_tmp() {
         exit $code
     }
     trap cleanup INT EXIT
+}
+
+download_binary() {
+    curl -o ${TMP_BIN} -sfL "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/${OSS_K3S_VERSION}/bin/k3s-${ARCH}"
 }
 
 setup_binary() {
@@ -94,6 +99,14 @@ setup_binary() {
     fi
 }
 
+download_images() {
+    curl -o ${TMP_IMAGES} -sfL "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/${OSS_K3S_VERSION}/deployments/${ARCH}/images.tar"
+}
+
+setup_images() {
+    docker load -i ${TMP_IMAGES}
+}
+
 prepare() {
     setup_env
     setup_tmp
@@ -101,11 +114,13 @@ prepare() {
 }
 
 download() {
-    curl -o ${TMP_BIN} -sfL "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/${OSS_K3S_VERSION}/bin/k3s-${ARCH}"
+    download_binary
+    download_images
 }
 
 install() {
     setup_binary
+    setup_images
 
     export INSTALL_K3S_VERSION=$K3S_VERSION
     export INSTALL_K3S_SKIP_DOWNLOAD=true
