@@ -103,12 +103,16 @@ setup_binary() {
 
 download_images() {
     info "Downloading Images..."
-    curl -o ${TMP_IMAGES} -L "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/${OSS_K3S_VERSION}/deployments/${ARCH}/images.tar"
+    curl -o ${TMP_IMAGES} -L "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/${OSS_K3S_VERSION}/deployments/${ARCH}/images.tar" || info "No Preloaded Images Available."
 }
 
 setup_images() {
     info "Loading Images..."
-    docker load -i ${TMP_IMAGES}
+    if [ -f "${TMP_IMAGES}" ]; then
+        docker load -i ${TMP_IMAGES}
+    else
+        info "No Preloaded Images Available."
+    fi
 }
 
 prepare() {
