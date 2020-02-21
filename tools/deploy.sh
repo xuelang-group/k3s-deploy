@@ -22,7 +22,6 @@ setup_verify_bind_address() {
 }
 
 setup_verify_version() {
-    setup_verify_version() {
     if [ -n "${INSTALL_SUANPAN_ROCKET_VERSION}" ]; then
         K3S_VERSION="${INSTALL_SUANPAN_ROCKET_VERSION}"
     else
@@ -32,10 +31,10 @@ setup_verify_version() {
 }
 
 setup_verify_arch() {
-    if [ -z "$ARCH" ]; then
+    if [ -z "${ARCH}" ]; then
         ARCH=$(uname -m)
     fi
-    case $ARCH in
+    case ${ARCH} in
         amd64)
             ARCH="amd64"
             SUFFIX=""
@@ -131,11 +130,9 @@ check() {
     k3s check-config
 }
 
-main() {
+{
     prepare
     download
     install
     check
 }
-
-main
