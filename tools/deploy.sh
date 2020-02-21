@@ -131,9 +131,11 @@ check() {
     k3s check-config
 }
 
-{
+main() {
     prepare
     download
     install
     check
 }
+
+main
