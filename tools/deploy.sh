@@ -2,8 +2,7 @@
 
 set -xe
 
-info()
-{
+info() {
     echo '[INFO] ' "$@"
 }
 
