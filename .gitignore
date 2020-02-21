@@ -1,2 +1,5 @@
 .DS_Store
+ossutil_output/
+.ossutil_checkpoint/
+
 images.tar
