@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -xe
+set -e
 
 info() {
     echo '[INFO] ' "$@"
@@ -19,6 +19,7 @@ setup_verify_bind_address() {
     else
         K3S_BIND_ADDRESS="0.0.0.0"
     fi
+    info "Bind Address: ${K3S_BIND_ADDRESS}"
 }
 
 setup_verify_version() {
@@ -28,6 +29,7 @@ setup_verify_version() {
         K3S_VERSION=$(curl -sfL "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/version.txt")
     fi
     OSS_K3S_VERSION=$(echo ${K3S_VERSION} | sed "s/+/-/g")
+    info "Version: ${K3S_VERSION}"
 }
 
 setup_verify_arch() {
@@ -58,6 +60,7 @@ setup_verify_arch() {
         *)
             fatal "Unsupported architecture ${ARCH}"
     esac
+    info "ARCH: ${ARCH}"
 }
 
 setup_tmp() {
@@ -76,7 +79,8 @@ setup_tmp() {
 }
 
 download_binary() {
-    curl -o ${TMP_BIN} -sfL "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/${OSS_K3S_VERSION}/bin/k3s-${ARCH}"
+    info "Downloading Binary..."
+    curl -o ${TMP_BIN} -L "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/${OSS_K3S_VERSION}/bin/k3s-${ARCH}"
 }
 
 setup_binary() {
@@ -98,10 +102,12 @@ setup_binary() {
 }
 
 download_images() {
-    curl -o ${TMP_IMAGES} -sfL "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/${OSS_K3S_VERSION}/deployments/${ARCH}/images.tar"
+    info "Downloading Images..."
+    curl -o ${TMP_IMAGES} -L "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/${OSS_K3S_VERSION}/deployments/${ARCH}/images.tar"
 }
 
 setup_images() {
+    info "Loading Images..."
     docker load -i ${TMP_IMAGES}
 }
 
@@ -128,6 +134,7 @@ install() {
 }
 
 check() {
+    info "Checking..."
     k3s check-config
 }
 
