@@ -7,3 +7,9 @@ Deploy K3S in China
 ``` bash
 curl -sfL https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/deploy.sh | sh -
 ```
+
+### Enable Nvidia Runtime
+``` bash
+export INSTALL_K3S_WITH_NVIDIA_RUNTIME=true
+curl -sfL https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/deploy.sh | sh -
+```

@@ -13,9 +13,16 @@ setup_env() {
     fi
 }
 
+setup_verify_runtime() {
+    if [ "${INSTALL_K3S_WITH_NVIDIA_RUNTIME}" == "true" ]; then
+        ${SUDO} jq '."default-runtime" |= "nvidia"' /etc/docker/daemon.json > /etc/docker/daemon.json
+        ${SUDO} systemctl restart docker
+    fi
+}
+
 setup_verify_bind_address() {
-    if [ -n "${INSTALL_SUANPAN_ROCKET_VERSION}" ]; then
-        K3S_BIND_ADDRESS="${INSTALL_SUANPAN_ROCKET_VERSION}"
+    if [ -n "${INSTALL_K3S_BIND_ADDRESS}" ]; then
+        K3S_BIND_ADDRESS="${INSTALL_K3S_BIND_ADDRESS}"
     else
         K3S_BIND_ADDRESS="0.0.0.0"
     fi
@@ -87,16 +94,16 @@ setup_binary() {
     BIN_DIR="/usr/local/bin"
     chmod 755 ${TMP_BIN}
     info "Installing k3s to ${BIN_DIR}/k3s"
-    $SUDO chown root:root ${TMP_BIN}
-    $SUDO mv -f ${TMP_BIN} ${BIN_DIR}/k3s
+    ${SUDO} chown root:root ${TMP_BIN}
+    ${SUDO} mv -f ${TMP_BIN} ${BIN_DIR}/k3s
 
     if command -v getenforce > /dev/null 2>&1; then
         if [ "Disabled" != $(getenforce) ]; then
 	    info 'SELinux is enabled, setting permissions'
-	    if ! $SUDO semanage fcontext -l | grep "${BIN_DIR}/k3s" > /dev/null 2>&1; then
-	        $SUDO semanage fcontext -a -t bin_t "${BIN_DIR}/k3s"
+	    if ! ${SUDO} semanage fcontext -l | grep "${BIN_DIR}/k3s" > /dev/null 2>&1; then
+	        ${SUDO} semanage fcontext -a -t bin_t "${BIN_DIR}/k3s"
 	    fi
-	    $SUDO restorecon -v ${BIN_DIR}/k3s > /dev/null
+	    ${SUDO} restorecon -v ${BIN_DIR}/k3s > /dev/null
         fi
     fi
 }
