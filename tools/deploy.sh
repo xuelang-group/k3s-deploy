@@ -127,6 +127,7 @@ prepare() {
     setup_tmp
     setup_verify_arch
     setup_verify_version
+    setup_verify_runtime
 }
 
 download() {
