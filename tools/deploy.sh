@@ -19,6 +19,8 @@ setup_verify_runtime() {
         ${SUDO} jq '."default-runtime" |= "nvidia"' /etc/docker/daemon.json > /etc/docker/daemon.json
         info "Restarting docker..."
         ${SUDO} systemctl restart docker
+    else
+        info "Runtime: default (Not Change)"
     fi
 }
 
