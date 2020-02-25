@@ -14,7 +14,7 @@ setup_env() {
 }
 
 setup_verify_runtime() {
-    if [ "${INSTALL_K3S_WITH_NVIDIA_RUNTIME}" == "true" ]; then
+    if [ "${INSTALL_K3S_WITH_NVIDIA_RUNTIME}" = true ]; then
         info "Runtime: nvidia"
         ${SUDO} jq '."default-runtime" |= "nvidia"' /etc/docker/daemon.json > /etc/docker/daemon.json
         info "Restarting docker..."
