@@ -16,7 +16,8 @@ setup_env() {
 setup_verify_runtime() {
     if [ "${INSTALL_K3S_WITH_NVIDIA_RUNTIME}" = true ]; then
         info "Runtime: nvidia"
-        ${SUDO} jq '."default-runtime" |= "nvidia"' /etc/docker/daemon.json > /etc/docker/daemon.json
+        jq '."default-runtime" |= "nvidia"' /etc/docker/daemon.json > $TMP_DOCKER_DAEMON_JSON
+        ${SUDO} cat $TMP_DOCKER_DAEMON_JSON > /etc/docker/daemon.json
         info "Restarting docker..."
         ${SUDO} systemctl restart docker
     else
@@ -79,6 +80,7 @@ setup_tmp() {
     TMP_HASH=${TMP_DIR}/k3s.hash
     TMP_BIN=${TMP_DIR}/k3s.bin
     TMP_IMAGES=${TMP_DIR}/images.tar
+    TMP_DOCKER_DAEMON_JSON=${TMP_DIR}/daemon.json
     cleanup() {
         code=$?
         set +e
