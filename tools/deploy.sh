@@ -157,6 +157,7 @@ check() {
 }
 
 {
+    info "Start Deploying K3S..."
     prepare
     download
     install
