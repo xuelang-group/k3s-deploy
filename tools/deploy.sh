@@ -39,7 +39,7 @@ setup_verify_version() {
     else
         K3S_VERSION=$(curl -sfL "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/version.txt")
     fi
-    OSS_K3S_VERSION=$(echo ${K3S_VERSION} | sed "s/+/-/g")
+    OSS_K3S_VERSION=$(echo ${K3S_VERSION} | sed "s/+/%2B/g")
     info "Version: ${K3S_VERSION}"
 }
 
