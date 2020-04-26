@@ -29,7 +29,7 @@ setup_verify_bind_address() {
     if [ -n "${INSTALL_K3S_BIND_ADDRESS}" ]; then
         K3S_BIND_ADDRESS="${INSTALL_K3S_BIND_ADDRESS}"
     else
-        K3S_BIND_ADDRESS="0.0.0.0"
+        K3S_BIND_ADDRESS="127.0.0.1"
     fi
     info "Bind Address: ${K3S_BIND_ADDRESS}"
 }
