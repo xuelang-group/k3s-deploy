@@ -14,15 +14,18 @@ setup_env() {
 }
 
 setup_verify_runtime() {
+    info "Mirrors: https://registry.docker-cn.com,https://docker.mirrors.ustc.edu.cn"
+    jq '."registry-mirrors" |= ["https://registry.docker-cn.com", "https://docker.mirrors.ustc.edu.cn"]' /etc/docker/daemon.json > $TMP_DOCKER_DAEMON_JSON
+    ${SUDO} cat $TMP_DOCKER_DAEMON_JSON > /etc/docker/daemon.json
+
     if [ "${INSTALL_K3S_WITH_NVIDIA_RUNTIME}" = true ]; then
         info "Runtime: nvidia"
         jq '."default-runtime" |= "nvidia"' /etc/docker/daemon.json > $TMP_DOCKER_DAEMON_JSON
         ${SUDO} cat $TMP_DOCKER_DAEMON_JSON > /etc/docker/daemon.json
-        info "Restarting docker..."
-        ${SUDO} systemctl restart docker
-    else
-        info "Runtime: default (Not Change)"
     fi
+
+    info "Restarting docker..."
+    ${SUDO} systemctl restart docker
 }
 
 setup_verify_bind_address() {
