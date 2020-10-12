@@ -1,7 +1,7 @@
 # k3s-deploy
 Deploy K3S in China
 
-`Version: 0.0.30`
+`Version: 0.0.31`
 
 ## Usage
 ``` bash
