@@ -15,7 +15,7 @@ setup_env() {
 
 setup_verify_runtime() {
     DOCKER_DAEMON_JSON="/etc/docker/daemon.json"
-    touch $DOCKER_DAEMON_JSON
+    mkdir -p $(dirname $DOCKER_DAEMON_JSON)
 
     if [ "${INSTALL_K3S_WITH_MIRRORS}" = true ]; then
         info "Mirrors: https://registry.docker-cn.com,https://docker.mirrors.ustc.edu.cn"
