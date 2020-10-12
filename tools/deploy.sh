@@ -156,7 +156,7 @@ install() {
     export INSTALL_K3S_MIRROR=cn
     export INSTALL_K3S_VERSION=${K3S_VERSION}
     export INSTALL_K3S_EXEC="--docker --bind-address=${K3S_BIND_ADDRESS} --disable-network-policy"
-    curl -sfL "https://docs.rancher.cn/k3s/k3s-install.sh" | sh -
+    curl -sfL "http://rancher-mirror.cnrancher.com/k3s/k3s-install.sh" | sh -
 }
 
 check() {
