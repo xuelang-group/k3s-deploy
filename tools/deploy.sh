@@ -43,8 +43,8 @@ setup_verify_bind_address() {
 }
 
 setup_verify_version() {
-    if [ -n "${INSTALL_SUANPAN_ROCKET_VERSION}" ]; then
-        K3S_VERSION="${INSTALL_SUANPAN_ROCKET_VERSION}"
+    if [ -n "${INSTALL_K3S_VERSION}" ]; then
+        K3S_VERSION="${INSTALL_K3S_VERSION}"
     else
         K3S_VERSION=$(curl -sfL "https://suanpan-public.oss-cn-shanghai.aliyuncs.com/k3s/version.txt")
     fi
